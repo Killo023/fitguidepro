@@ -61,6 +61,7 @@ export default function WelcomeScreen({ navigation }) {
           By continuing, you agree to our Terms & Privacy Policy
         </Text>
       </View>
+      </View>
     </BackgroundPattern>
   );
 }
