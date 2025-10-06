@@ -1,0 +1,15 @@
+# Assets Directory
+
+This directory should contain your app icons and splash screens.
+
+For a production app, you would add:
+- icon.png (1024x1024)
+- splash.png (recommended size)
+- adaptive-icon.png (for Android)
+- favicon.png (for web)
+
+You can generate these using tools like:
+- https://www.appicon.co/
+- https://expo.github.io/expo-cli-assets-generator/
+
+For now, the app will work with Expo's default assets.

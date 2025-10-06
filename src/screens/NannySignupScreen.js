@@ -1,0 +1,325 @@
+import React, { useState } from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  Alert,
+} from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+import { useAuth } from '../context/AuthContext';
+import { signUpUser } from '../services/authService';
+
+export default function NannySignupScreen({ navigation }) {
+  const [formData, setFormData] = useState({
+    fullName: '',
+    email: '',
+    phone: '',
+    experience: '',
+    hourlyRate: '',
+    password: '',
+    confirmPassword: '',
+  });
+  const { signup } = useAuth();
+
+  const handleSignup = async () => {
+    if (!formData.fullName || !formData.email || !formData.password) {
+      if (Platform.OS === 'web') {
+        window.alert('Please fill in all required fields');
+      } else {
+        Alert.alert('Error', 'Please fill in all required fields');
+      }
+      return;
+    }
+
+    if (formData.password !== formData.confirmPassword) {
+      if (Platform.OS === 'web') {
+        window.alert('Passwords do not match');
+      } else {
+        Alert.alert('Error', 'Passwords do not match');
+      }
+      return;
+    }
+
+    try {
+      const userData = {
+        fullName: formData.fullName,
+        name: formData.fullName,
+        phone: formData.phone,
+        experience: parseInt(formData.experience) || 0,
+        hourlyRate: parseInt(formData.hourlyRate) || 0,
+        verified: false,
+        rating: 0,
+        reviews: 0,
+        specialties: [],
+        availability: [],
+      };
+
+      const result = await signUpUser(formData.email, formData.password, userData, 'nanny');
+      
+      if (result.success) {
+        if (Platform.OS === 'web') {
+          window.alert('✅ Your nanny profile has been created!');
+          navigation.navigate('Login');
+        } else {
+          Alert.alert('Success', 'Your nanny profile has been created!', [
+            { text: 'OK', onPress: () => navigation.navigate('Login') }
+          ]);
+        }
+      } else {
+        if (Platform.OS === 'web') {
+          window.alert(`Signup Failed\n\n${result.error}`);
+        } else {
+          Alert.alert('Signup Failed', result.error);
+        }
+      }
+    } catch (error) {
+      if (Platform.OS === 'web') {
+        window.alert('Error: An error occurred during signup');
+      } else {
+        Alert.alert('Error', 'An error occurred during signup');
+      }
+      console.error(error);
+    }
+  };
+
+  return (
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={styles.container}
+    >
+      <ScrollView contentContainerStyle={styles.scrollContent}>
+        <TouchableOpacity
+          style={styles.backButton}
+          onPress={() => navigation.goBack()}
+        >
+          <Ionicons name="arrow-back" size={24} color="#1F2937" />
+        </TouchableOpacity>
+
+        <View style={styles.header}>
+          <Ionicons name="briefcase" size={48} color="#10B981" />
+          <Text style={styles.title}>Sign Up as a Nanny</Text>
+          <Text style={styles.subtitle}>Start earning by caring for children</Text>
+        </View>
+
+        <View style={styles.form}>
+          <View style={styles.inputContainer}>
+            <Ionicons name="person-outline" size={20} color="#6B7280" style={styles.inputIcon} />
+            <TextInput
+              style={styles.input}
+              placeholder="Full Name *"
+              value={formData.fullName}
+              onChangeText={(text) => setFormData({ ...formData, fullName: text })}
+              autoCapitalize="words"
+            />
+          </View>
+
+          <View style={styles.inputContainer}>
+            <Ionicons name="mail-outline" size={20} color="#6B7280" style={styles.inputIcon} />
+            <TextInput
+              style={styles.input}
+              placeholder="Email Address *"
+              value={formData.email}
+              onChangeText={(text) => setFormData({ ...formData, email: text })}
+              keyboardType="email-address"
+              autoCapitalize="none"
+            />
+          </View>
+
+          <View style={styles.inputContainer}>
+            <Ionicons name="call-outline" size={20} color="#6B7280" style={styles.inputIcon} />
+            <TextInput
+              style={styles.input}
+              placeholder="Phone Number *"
+              value={formData.phone}
+              onChangeText={(text) => setFormData({ ...formData, phone: text })}
+              keyboardType="phone-pad"
+            />
+          </View>
+
+          <View style={styles.inputContainer}>
+            <Ionicons name="time-outline" size={20} color="#6B7280" style={styles.inputIcon} />
+            <TextInput
+              style={styles.input}
+              placeholder="Years of Experience *"
+              value={formData.experience}
+              onChangeText={(text) => setFormData({ ...formData, experience: text })}
+              keyboardType="numeric"
+            />
+          </View>
+
+          <View style={styles.inputContainer}>
+            <Text style={styles.currencySymbol}>R</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="Hourly Rate (ZAR) *"
+              value={formData.hourlyRate}
+              onChangeText={(text) => setFormData({ ...formData, hourlyRate: text })}
+              keyboardType="numeric"
+            />
+            <Text style={styles.perHour}>/hour</Text>
+          </View>
+
+          <View style={styles.inputContainer}>
+            <Ionicons name="lock-closed-outline" size={20} color="#6B7280" style={styles.inputIcon} />
+            <TextInput
+              style={styles.input}
+              placeholder="Password *"
+              value={formData.password}
+              onChangeText={(text) => setFormData({ ...formData, password: text })}
+              secureTextEntry
+              autoCapitalize="none"
+            />
+          </View>
+
+          <View style={styles.inputContainer}>
+            <Ionicons name="lock-closed-outline" size={20} color="#6B7280" style={styles.inputIcon} />
+            <TextInput
+              style={styles.input}
+              placeholder="Confirm Password *"
+              value={formData.confirmPassword}
+              onChangeText={(text) => setFormData({ ...formData, confirmPassword: text })}
+              secureTextEntry
+              autoCapitalize="none"
+            />
+          </View>
+
+          <View style={styles.infoBox}>
+            <Ionicons name="information-circle-outline" size={20} color="#6366F1" />
+            <Text style={styles.infoText}>
+              You'll be able to add more details like availability, specialties, and certifications after creating your account.
+            </Text>
+          </View>
+
+          <TouchableOpacity style={styles.signupButton} onPress={handleSignup}>
+            <Text style={styles.signupButtonText}>Create Nanny Profile</Text>
+          </TouchableOpacity>
+
+          <View style={styles.termsContainer}>
+            <Text style={styles.termsText}>
+              By signing up, you agree to our{' '}
+              <Text style={styles.termsLink}>Terms of Service</Text> and{' '}
+              <Text style={styles.termsLink}>Privacy Policy</Text>
+            </Text>
+          </View>
+        </View>
+      </ScrollView>
+    </KeyboardAvoidingView>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
+  scrollContent: {
+    flexGrow: 1,
+    padding: 20,
+  },
+  backButton: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: '#F3F4F6',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 20,
+  },
+  header: {
+    alignItems: 'center',
+    marginBottom: 30,
+  },
+  title: {
+    fontSize: 28,
+    fontWeight: 'bold',
+    color: '#1F2937',
+    marginTop: 16,
+    marginBottom: 8,
+  },
+  subtitle: {
+    fontSize: 15,
+    color: '#6B7280',
+  },
+  form: {
+    flex: 1,
+  },
+  inputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#F9FAFB',
+    borderWidth: 1,
+    borderColor: '#E5E7EB',
+    borderRadius: 12,
+    paddingHorizontal: 15,
+    marginBottom: 15,
+    height: 56,
+  },
+  inputIcon: {
+    marginRight: 10,
+  },
+  input: {
+    flex: 1,
+    fontSize: 16,
+    color: '#1F2937',
+  },
+  currencySymbol: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#6366F1',
+    marginRight: 8,
+  },
+  perHour: {
+    fontSize: 14,
+    color: '#6B7280',
+    marginLeft: 8,
+  },
+  infoBox: {
+    flexDirection: 'row',
+    backgroundColor: '#EEF2FF',
+    padding: 15,
+    borderRadius: 12,
+    marginBottom: 20,
+    gap: 10,
+  },
+  infoText: {
+    flex: 1,
+    fontSize: 13,
+    color: '#4B5563',
+    lineHeight: 18,
+  },
+  signupButton: {
+    backgroundColor: '#10B981',
+    padding: 18,
+    borderRadius: 12,
+    alignItems: 'center',
+    shadowColor: '#10B981',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 5,
+  },
+  signupButtonText: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  termsContainer: {
+    marginTop: 20,
+    paddingHorizontal: 10,
+  },
+  termsText: {
+    textAlign: 'center',
+    color: '#6B7280',
+    fontSize: 12,
+    lineHeight: 18,
+  },
+  termsLink: {
+    color: '#10B981',
+    fontWeight: '600',
+  },
+});

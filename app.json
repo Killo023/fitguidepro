@@ -1,0 +1,42 @@
+{
+  "expo": {
+    "name": "NannyApp",
+    "slug": "nannyapp",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "resizeMode": "contain",
+      "backgroundColor": "#64748B"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.nannyapp.app"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#64748B"
+      },
+      "package": "com.nannyapp.app",
+      "permissions": [
+        "ACCESS_FINE_LOCATION",
+        "ACCESS_COARSE_LOCATION"
+      ]
+    },
+    "web": {
+      "bundler": "metro"
+    },
+    "plugins": [
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "Allow NannyApp to use your location to find nannies nearby."
+        }
+      ],
+      "expo-font"
+    ]
+  }
+}
