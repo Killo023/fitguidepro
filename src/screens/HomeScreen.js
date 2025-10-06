@@ -6,10 +6,11 @@ import {
   TouchableOpacity,
   ScrollView,
   TextInput,
+  ImageBackground,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import colors from '../theme/colors';
-import BackgroundPattern from '../components/BackgroundPattern';
+import BackgroundImage from '../components/BackgroundImage';
 
 export default function HomeScreen({ navigation }) {
   const [searchLocation, setSearchLocation] = useState('');
@@ -26,15 +27,21 @@ export default function HomeScreen({ navigation }) {
   };
 
   return (
-    <BackgroundPattern variant="home">
+    <BackgroundImage variant="home">
       <ScrollView style={styles.container}>
       {/* Hero Section */}
-      <View style={styles.heroSection}>
-        <Text style={styles.heroTitle}>Find Your Perfect Nanny</Text>
-        <Text style={styles.heroSubtitle}>
-          Trusted, verified childcare professionals in your area
-        </Text>
-      </View>
+      <ImageBackground
+        source={{ uri: 'https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=800&q=80' }}
+        style={styles.heroSection}
+        imageStyle={styles.heroImageStyle}
+      >
+        <View style={styles.heroOverlay}>
+          <Text style={styles.heroTitle}>Find Your Perfect Nanny</Text>
+          <Text style={styles.heroSubtitle}>
+            Trusted, verified childcare professionals in your area
+          </Text>
+        </View>
+      </ImageBackground>
 
       {/* Search Section */}
       <View style={styles.searchSection}>
@@ -127,7 +134,7 @@ export default function HomeScreen({ navigation }) {
         </View>
       </View>
       </ScrollView>
-    </BackgroundPattern>
+    </BackgroundImage>
   );
 }
 
@@ -137,10 +144,19 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
   },
   heroSection: {
-    backgroundColor: colors.primary,
     padding: 30,
     paddingTop: 20,
     paddingBottom: 40,
+    minHeight: 180,
+    justifyContent: 'center',
+  },
+  heroImageStyle: {
+    opacity: 0.3,
+  },
+  heroOverlay: {
+    backgroundColor: 'rgba(100, 116, 139, 0.85)',
+    padding: 20,
+    borderRadius: 16,
   },
   heroTitle: {
     fontSize: 32,

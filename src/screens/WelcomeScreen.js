@@ -9,17 +9,20 @@ import {
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import colors from '../theme/colors';
-import BackgroundPattern from '../components/BackgroundPattern';
+import BackgroundImage from '../components/BackgroundImage';
 
 const { width } = Dimensions.get('window');
 
 export default function WelcomeScreen({ navigation }) {
   return (
-    <BackgroundPattern variant="welcome">
+    <BackgroundImage variant="welcome">
       <View style={styles.container}>
       {/* Hero Image/Illustration */}
       <View style={styles.heroSection}>
-        <Ionicons name="people" size={120} color={colors.primary} />
+        <Image 
+          source={{ uri: 'https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=300&q=80' }}
+          style={styles.heroImage}
+        />
         <Text style={styles.appName}>NannyApp</Text>
         <Text style={styles.tagline}>Your Trusted Childcare Partner</Text>
       </View>
@@ -62,7 +65,7 @@ export default function WelcomeScreen({ navigation }) {
         </Text>
       </View>
       </View>
-    </BackgroundPattern>
+    </BackgroundImage>
   );
 }
 
@@ -76,6 +79,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     paddingTop: 60,
+  },
+  heroImage: {
+    width: 140,
+    height: 140,
+    borderRadius: 70,
+    marginBottom: 20,
+    borderWidth: 4,
+    borderColor: colors.primary,
   },
   appName: {
     fontSize: 48,

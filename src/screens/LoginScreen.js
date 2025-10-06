@@ -13,7 +13,7 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import { useAuth } from '../context/AuthContext';
 import { resetPassword } from '../services/authService';
-import BackgroundPattern from '../components/BackgroundPattern';
+import BackgroundImage from '../components/BackgroundImage';
 
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState('');
@@ -126,7 +126,7 @@ export default function LoginScreen({ navigation }) {
   };
 
   return (
-    <BackgroundPattern variant="auth">
+    <BackgroundImage variant="auth">
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={styles.container}
@@ -213,7 +213,7 @@ export default function LoginScreen({ navigation }) {
         </View>
       </ScrollView>
       </KeyboardAvoidingView>
-    </BackgroundPattern>
+    </BackgroundImage>
   );
 }
 
