@@ -15,10 +15,10 @@ export default function HomeScreen({ navigation }) {
   const [searchLocation, setSearchLocation] = useState('');
 
   const categories = [
-    { id: '1', name: 'Infant Care', icon: 'baby-outline', color: colors.primary },
-    { id: '2', name: 'After School', icon: 'school-outline', color: colors.primary },
-    { id: '3', name: 'Full Time', icon: 'time-outline', color: colors.primary },
-    { id: '4', name: 'Special Needs', icon: 'heart-outline', color: colors.primary },
+    { id: '1', name: 'Infant Care', icon: 'baby-outline', color: colors.categories.infant },
+    { id: '2', name: 'After School', icon: 'school-outline', color: colors.categories.homework },
+    { id: '3', name: 'Full Time', icon: 'time-outline', color: colors.accents.teal },
+    { id: '4', name: 'Special Needs', icon: 'heart-outline', color: colors.accents.rose },
   ];
 
   const handleSearch = () => {
@@ -114,14 +114,6 @@ export default function HomeScreen({ navigation }) {
             </Text>
           </View>
         </View>
-      </View>
-
-      {/* Decorative Elements */}
-      <View style={styles.decorativeElements}>
-        <View style={[styles.decorativeCircle, { top: 50, right: 20, backgroundColor: colors.accents.purple + '08' }]} />
-        <View style={[styles.decorativeCircle, { top: 120, left: 30, backgroundColor: colors.accents.teal + '08' }]} />
-        <View style={[styles.decorativeCircle, { top: 200, right: 50, backgroundColor: colors.accents.rose + '08' }]} />
-        <View style={[styles.decorativeCircle, { top: 280, left: 10, backgroundColor: colors.accents.amber + '08' }]} />
       </View>
 
       {/* Quick Stats */}
@@ -276,27 +268,12 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#6B7280',
   },
-  decorativeElements: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    zIndex: 0,
-  },
-  decorativeCircle: {
-    position: 'absolute',
-    width: 80,
-    height: 80,
-    borderRadius: 40,
-  },
   statsSection: {
     flexDirection: 'row',
     padding: 20,
     paddingTop: 10,
     paddingBottom: 30,
     gap: 10,
-    zIndex: 1,
   },
   statCard: {
     flex: 1,

@@ -13,7 +13,6 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import { useAuth } from '../context/AuthContext';
 import { signUpUser } from '../services/authService';
-import BackgroundImage from '../components/BackgroundImage';
 
 export default function ParentSignupScreen({ navigation }) {
   const [formData, setFormData] = useState({
@@ -80,11 +79,10 @@ export default function ParentSignupScreen({ navigation }) {
   };
 
   return (
-    <BackgroundImage variant="signup">
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        style={styles.container}
-      >
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={styles.container}
+    >
       <ScrollView contentContainerStyle={styles.scrollContent}>
         <TouchableOpacity
           style={styles.backButton}
@@ -171,15 +169,14 @@ export default function ParentSignupScreen({ navigation }) {
           </View>
         </View>
       </ScrollView>
-      </KeyboardAvoidingView>
-    </BackgroundImage>
+    </KeyboardAvoidingView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'transparent',
+    backgroundColor: '#fff',
   },
   scrollContent: {
     flexGrow: 1,
