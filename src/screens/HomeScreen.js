@@ -29,7 +29,7 @@ export default function HomeScreen({ navigation }) {
     <ScrollView style={styles.container}>
       {/* Hero Section */}
       <ImageBackground
-        source={{ uri: 'https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=800&q=80' }}
+        source={{ uri: 'https://images.unsplash.com/photo-1511895426328-dc8714191300?w=1200&q=80&auto=format&fit=crop' }}
         style={styles.heroSection}
         imageStyle={styles.heroImageStyle}
       >

@@ -18,7 +18,7 @@ export default function WelcomeScreen({ navigation }) {
       {/* Hero Image/Illustration */}
       <View style={styles.heroSection}>
         <Image 
-          source={{ uri: 'https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=300&q=80' }}
+          source={{ uri: 'https://images.unsplash.com/photo-1544027993-37dbfe43562a?w=400&q=80&auto=format&fit=crop' }}
           style={styles.heroImage}
         />
         <Text style={styles.appName}>NannyApp</Text>
