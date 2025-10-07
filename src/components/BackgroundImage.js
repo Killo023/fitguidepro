@@ -22,11 +22,11 @@ export default function BackgroundImage({ children, imageUrl, variant = 'default
   };
 
   const defaultImages = {
-    welcome: 'https://images.unsplash.com/photo-1544027993-37dbfe43562a?w=1200&q=80&auto=format&fit=crop',
-    home: 'https://images.unsplash.com/photo-1511895426328-dc8714191300?w=1200&q=80&auto=format&fit=crop',
-    auth: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200&q=80&auto=format&fit=crop',
-    signup: 'https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4?w=1200&q=80&auto=format&fit=crop',
-    select: 'https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=1200&q=80&auto=format&fit=crop',
+    welcome: 'https://images.unsplash.com/photo-1476234251651-f353703a034d?w=1200&q=80',
+    home: 'https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=1200&q=80',
+    auth: 'https://images.unsplash.com/photo-1544776193-352d25ca82cd?w=1200&q=80',
+    signup: 'https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=1200&q=80',
+    select: 'https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=1200&q=80',
   };
 
   const backgroundImage = imageUrl || defaultImages[variant] || defaultImages.welcome;
