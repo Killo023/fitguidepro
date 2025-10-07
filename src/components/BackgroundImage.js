@@ -7,11 +7,15 @@ export default function BackgroundImage({ children, imageUrl, variant = 'default
   const getOverlayGradient = () => {
     switch (variant) {
       case 'welcome':
-        return ['rgba(248, 250, 252, 0.95)', 'rgba(255, 255, 255, 0.9)', 'rgba(248, 250, 252, 0.95)'];
+        return ['rgba(248, 250, 252, 0.9)', 'rgba(255, 255, 255, 0.85)', 'rgba(248, 250, 252, 0.9)'];
       case 'home':
-        return ['rgba(255, 255, 255, 0.92)', 'rgba(249, 250, 251, 0.88)', 'rgba(255, 255, 255, 0.92)'];
+        return ['rgba(255, 255, 255, 0.85)', 'rgba(249, 250, 251, 0.8)', 'rgba(255, 255, 255, 0.85)'];
       case 'auth':
-        return ['rgba(249, 250, 251, 0.94)', 'rgba(255, 255, 255, 0.9)', 'rgba(249, 250, 251, 0.94)'];
+        return ['rgba(249, 250, 251, 0.9)', 'rgba(255, 255, 255, 0.85)', 'rgba(249, 250, 251, 0.9)'];
+      case 'signup':
+        return ['rgba(255, 255, 255, 0.92)', 'rgba(248, 250, 252, 0.88)', 'rgba(255, 255, 255, 0.92)'];
+      case 'select':
+        return ['rgba(255, 255, 255, 0.88)', 'rgba(241, 245, 249, 0.85)', 'rgba(255, 255, 255, 0.88)'];
       default:
         return ['rgba(255, 255, 255, 0.9)', 'rgba(248, 250, 252, 0.85)', 'rgba(255, 255, 255, 0.9)'];
     }
@@ -21,6 +25,8 @@ export default function BackgroundImage({ children, imageUrl, variant = 'default
     welcome: 'https://images.unsplash.com/photo-1476234251651-f353703a034d?w=1200&q=80',
     home: 'https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=1200&q=80',
     auth: 'https://images.unsplash.com/photo-1544776193-352d25ca82cd?w=1200&q=80',
+    signup: 'https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=1200&q=80',
+    select: 'https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=1200&q=80',
   };
 
   const backgroundImage = imageUrl || defaultImages[variant] || defaultImages.welcome;

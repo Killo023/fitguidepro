@@ -7,6 +7,7 @@ import {
   ScrollView,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import BackgroundImage from '../components/BackgroundImage';
 
 export default function UserTypeSelectScreen({ navigation, route }) {
   const { action } = route.params; // 'signup' or other actions
@@ -20,7 +21,8 @@ export default function UserTypeSelectScreen({ navigation, route }) {
   };
 
   return (
-    <ScrollView style={styles.container}>
+    <BackgroundImage variant="select">
+      <ScrollView style={styles.container}>
       <TouchableOpacity
         style={styles.backButton}
         onPress={() => navigation.goBack()}
@@ -97,14 +99,15 @@ export default function UserTypeSelectScreen({ navigation, route }) {
           Already have an account? <Text style={styles.loginLink}>Sign In</Text>
         </Text>
       </TouchableOpacity>
-    </ScrollView>
+      </ScrollView>
+    </BackgroundImage>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: 'transparent',
     padding: 20,
   },
   backButton: {
