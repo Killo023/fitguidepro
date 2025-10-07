@@ -6,6 +6,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { StatusBar } from 'expo-status-bar';
 import { AuthProvider, useAuth } from './src/context/AuthContext';
 import colors from './src/theme/colors';
+import BackgroundImage from './src/components/BackgroundImage';
 
 // Auth screens
 import WelcomeScreen from './src/screens/WelcomeScreen';
@@ -174,10 +175,12 @@ function Navigation() {
 export default function App() {
   return (
     <AuthProvider>
-      <StatusBar style="light" />
-      <NavigationContainer>
-        <Navigation />
-      </NavigationContainer>
+      <BackgroundImage variant="home">
+        <StatusBar style="dark" />
+        <NavigationContainer>
+          <Navigation />
+        </NavigationContainer>
+      </BackgroundImage>
     </AuthProvider>
   );
 }

@@ -9,14 +9,12 @@ import {
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import colors from '../theme/colors';
-import BackgroundImage from '../components/BackgroundImage';
 
 const { width } = Dimensions.get('window');
 
 export default function WelcomeScreen({ navigation }) {
   return (
-    <BackgroundImage variant="welcome">
-      <View style={styles.container}>
+    <View style={styles.container}>
       {/* Hero Image/Illustration */}
       <View style={styles.heroSection}>
         <Image 
@@ -64,8 +62,7 @@ export default function WelcomeScreen({ navigation }) {
           By continuing, you agree to our Terms & Privacy Policy
         </Text>
       </View>
-      </View>
-    </BackgroundImage>
+    </View>
   );
 }
 
