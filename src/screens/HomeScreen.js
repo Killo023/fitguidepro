@@ -119,15 +119,15 @@ export default function HomeScreen({ navigation }) {
       {/* Quick Stats */}
       <View style={styles.statsSection}>
         <View style={[styles.statCard, { backgroundColor: colors.accents.purple + '15', borderColor: colors.accents.purple + '30' }]}>
-          <Text style={[styles.statNumber, { color: colors.accents.purple }]}>1,500+</Text>
-          <Text style={styles.statLabel}>Nannies</Text>
+          <Text style={[styles.statNumber, { color: colors.accents.purple }]}>50+</Text>
+          <Text style={styles.statLabel}>Verified Nannies</Text>
         </View>
         <View style={[styles.statCard, { backgroundColor: colors.accents.teal + '15', borderColor: colors.accents.teal + '30' }]}>
-          <Text style={[styles.statNumber, { color: colors.accents.teal }]}>10,000+</Text>
-          <Text style={styles.statLabel}>Happy Families</Text>
+          <Text style={[styles.statNumber, { color: colors.accents.teal }]}>100+</Text>
+          <Text style={styles.statLabel}>Families Served</Text>
         </View>
         <View style={[styles.statCard, { backgroundColor: colors.accents.amber + '15', borderColor: colors.accents.amber + '30' }]}>
-          <Text style={[styles.statNumber, { color: colors.accents.amber }]}>4.9★</Text>
+          <Text style={[styles.statNumber, { color: colors.accents.amber }]}>4.8★</Text>
           <Text style={styles.statLabel}>Average Rating</Text>
         </View>
       </View>
