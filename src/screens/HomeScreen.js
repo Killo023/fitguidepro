@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import colors from '../theme/colors';
+import BackgroundImage from '../components/BackgroundImage';
 
 export default function HomeScreen({ navigation }) {
   const [searchLocation, setSearchLocation] = useState('');
@@ -26,7 +27,8 @@ export default function HomeScreen({ navigation }) {
   };
 
   return (
-    <ScrollView style={styles.container}>
+    <BackgroundImage variant="home">
+      <ScrollView style={styles.container}>
       {/* Hero Section */}
       <ImageBackground
         source={{ uri: 'https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=800&q=80' }}
@@ -131,7 +133,8 @@ export default function HomeScreen({ navigation }) {
           <Text style={styles.statLabel}>Average Rating</Text>
         </View>
       </View>
-    </ScrollView>
+      </ScrollView>
+    </BackgroundImage>
   );
 }
 
