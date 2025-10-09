@@ -45,8 +45,8 @@ export default function Dashboard({ plan, onReset, setPlan }: DashboardProps) {
                 Your Fitness Journey
               </h2>
               <p className="text-muted-foreground">
-                {goal.goalType === 'weight-loss' ? 'Weight Loss' : 
-                 goal.goalType === 'weightlifting' ? 'Muscle Building' : 'General Fitness'} • Day {daysSinceStart}
+                {(Array.isArray(goal.goalType) ? goal.goalType.includes('weight-loss') : goal.goalType === 'weight-loss') ? 'Weight Loss' : 
+                 (Array.isArray(goal.goalType) ? goal.goalType.includes('weightlifting') : goal.goalType === 'weightlifting') ? 'Muscle Building' : 'General Fitness'} • Day {daysSinceStart}
               </p>
             </div>
           </div>
@@ -199,8 +199,8 @@ export default function Dashboard({ plan, onReset, setPlan }: DashboardProps) {
                 <div className="p-4 bg-primary/5 rounded-lg border border-primary/20">
                   <h4 className="font-semibold text-primary mb-2">Current Goal</h4>
                   <p className="text-sm text-muted-foreground">
-                    {goal.goalType === 'weight-loss' ? 'Lose weight through cardio and strength training' :
-                     goal.goalType === 'weightlifting' ? 'Build muscle with progressive strength training' :
+                    {(Array.isArray(goal.goalType) ? goal.goalType.includes('weight-loss') : goal.goalType === 'weight-loss') ? 'Lose weight through cardio and strength training' :
+                     (Array.isArray(goal.goalType) ? goal.goalType.includes('weightlifting') : goal.goalType === 'weightlifting') ? 'Build muscle with progressive strength training' :
                      'Improve overall fitness with balanced workouts'}
                   </p>
                 </div>
@@ -268,9 +268,14 @@ export default function Dashboard({ plan, onReset, setPlan }: DashboardProps) {
                           </div>
                           <div>
                             <h3 className="font-semibold text-lg">
-                              {goal.goalType === 'weight-loss' ? 'Weight Loss Plan' :
-                               goal.goalType === 'weightlifting' ? 'Muscle Building Plan' :
-                               'General Fitness Plan'}
+                              {Array.isArray(goal.goalType) && goal.goalType.length > 1 
+                                ? 'Combined Fitness Plan'
+                                : (Array.isArray(goal.goalType) ? goal.goalType.includes('weight-loss') : goal.goalType === 'weight-loss') 
+                                  ? 'Weight Loss Plan'
+                                  : (Array.isArray(goal.goalType) ? goal.goalType.includes('weightlifting') : goal.goalType === 'weightlifting')
+                                    ? 'Muscle Building Plan'
+                                    : 'General Fitness Plan'
+                              }
                             </h3>
                             <p className="text-sm text-muted-foreground">
                               Started {new Date(goal.startDate).toLocaleDateString()}
@@ -358,7 +363,12 @@ export default function Dashboard({ plan, onReset, setPlan }: DashboardProps) {
                   <div className="space-y-3">
                     <div className="flex justify-between items-center p-3 bg-secondary/50 rounded-lg">
                       <span className="text-sm">Goal Type</span>
-                      <span className="font-medium capitalize">{goal.goalType.replace('-', ' ')}</span>
+                      <span className="font-medium capitalize text-sm">
+                        {Array.isArray(goal.goalType) 
+                          ? goal.goalType.map(g => g.replace('-', ' ')).join(' + ')
+                          : goal.goalType.replace('-', ' ')
+                        }
+                      </span>
                     </div>
                     <div className="flex justify-between items-center p-3 bg-secondary/50 rounded-lg">
                       <span className="text-sm">Diet Preference</span>
