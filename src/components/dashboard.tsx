@@ -128,30 +128,48 @@ export default function Dashboard({ plan, onReset, setPlan }: DashboardProps) {
       {/* Main Content Tabs */}
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
         <div className="overflow-x-auto scrollbar-hide">
-          <TabsList className="inline-flex w-max min-w-full h-auto p-1">
-            <TabsTrigger value="overview" className="flex items-center justify-center gap-1 px-3 py-2 text-xs whitespace-nowrap">
-              <TrendingUp className="w-4 h-4 flex-shrink-0" />
-              <span className="hidden sm:inline">Overview</span>
+          <TabsList className="inline-flex w-max min-w-full h-auto p-2 bg-gray-100 dark:bg-gray-800 rounded-lg">
+            <TabsTrigger 
+              value="overview" 
+              className="flex items-center justify-center gap-2 px-4 py-3 text-sm font-medium whitespace-nowrap min-w-[80px] h-auto data-[state=active]:bg-primary data-[state=active]:text-white data-[state=inactive]:text-gray-700 data-[state=inactive]:dark:text-gray-300 data-[state=inactive]:hover:bg-gray-200 data-[state=inactive]:dark:hover:bg-gray-700 transition-colors"
+            >
+              <TrendingUp className="w-5 h-5 flex-shrink-0" />
+              <span>Overview</span>
             </TabsTrigger>
-            <TabsTrigger value="workout" className="flex items-center justify-center gap-1 px-3 py-2 text-xs whitespace-nowrap">
-              <Target className="w-4 h-4 flex-shrink-0" />
-              <span className="hidden sm:inline">Workouts</span>
+            <TabsTrigger 
+              value="workout" 
+              className="flex items-center justify-center gap-2 px-4 py-3 text-sm font-medium whitespace-nowrap min-w-[80px] h-auto data-[state=active]:bg-primary data-[state=active]:text-white data-[state=inactive]:text-gray-700 data-[state=inactive]:dark:text-gray-300 data-[state=inactive]:hover:bg-gray-200 data-[state=inactive]:dark:hover:bg-gray-700 transition-colors"
+            >
+              <Target className="w-5 h-5 flex-shrink-0" />
+              <span>Workouts</span>
             </TabsTrigger>
-            <TabsTrigger value="nutrition" className="flex items-center justify-center gap-1 px-3 py-2 text-xs whitespace-nowrap">
-              <Calendar className="w-4 h-4 flex-shrink-0" />
-              <span className="hidden sm:inline">Nutrition</span>
+            <TabsTrigger 
+              value="nutrition" 
+              className="flex items-center justify-center gap-2 px-4 py-3 text-sm font-medium whitespace-nowrap min-w-[80px] h-auto data-[state=active]:bg-primary data-[state=active]:text-white data-[state=inactive]:text-gray-700 data-[state=inactive]:dark:text-gray-300 data-[state=inactive]:hover:bg-gray-200 data-[state=inactive]:dark:hover:bg-gray-700 transition-colors"
+            >
+              <Calendar className="w-5 h-5 flex-shrink-0" />
+              <span>Nutrition</span>
             </TabsTrigger>
-            <TabsTrigger value="progress" className="flex items-center justify-center gap-1 px-3 py-2 text-xs whitespace-nowrap">
-              <TrendingUp className="w-4 h-4 flex-shrink-0" />
-              <span className="hidden sm:inline">Progress</span>
+            <TabsTrigger 
+              value="progress" 
+              className="flex items-center justify-center gap-2 px-4 py-3 text-sm font-medium whitespace-nowrap min-w-[80px] h-auto data-[state=active]:bg-primary data-[state=active]:text-white data-[state=inactive]:text-gray-700 data-[state=inactive]:dark:text-gray-300 data-[state=inactive]:hover:bg-gray-200 data-[state=inactive]:dark:hover:bg-gray-700 transition-colors"
+            >
+              <TrendingUp className="w-5 h-5 flex-shrink-0" />
+              <span>Progress</span>
             </TabsTrigger>
-            <TabsTrigger value="plans" className="flex items-center justify-center gap-1 px-3 py-2 text-xs whitespace-nowrap">
-              <Users className="w-4 h-4 flex-shrink-0" />
-              <span className="hidden sm:inline">My Plans</span>
+            <TabsTrigger 
+              value="plans" 
+              className="flex items-center justify-center gap-2 px-4 py-3 text-sm font-medium whitespace-nowrap min-w-[80px] h-auto data-[state=active]:bg-primary data-[state=active]:text-white data-[state=inactive]:text-gray-700 data-[state=inactive]:dark:text-gray-300 data-[state=inactive]:hover:bg-gray-200 data-[state=inactive]:dark:hover:bg-gray-700 transition-colors"
+            >
+              <Users className="w-5 h-5 flex-shrink-0" />
+              <span>My Plans</span>
             </TabsTrigger>
-            <TabsTrigger value="settings" className="flex items-center justify-center gap-1 px-3 py-2 text-xs whitespace-nowrap">
-              <Clock className="w-4 h-4 flex-shrink-0" />
-              <span className="hidden sm:inline">Settings</span>
+            <TabsTrigger 
+              value="settings" 
+              className="flex items-center justify-center gap-2 px-4 py-3 text-sm font-medium whitespace-nowrap min-w-[80px] h-auto data-[state=active]:bg-primary data-[state=active]:text-white data-[state=inactive]:text-gray-700 data-[state=inactive]:dark:text-gray-300 data-[state=inactive]:hover:bg-gray-200 data-[state=inactive]:dark:hover:bg-gray-700 transition-colors"
+            >
+              <Clock className="w-5 h-5 flex-shrink-0" />
+              <span>Settings</span>
             </TabsTrigger>
           </TabsList>
         </div>
