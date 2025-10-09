@@ -122,9 +122,6 @@ export default function Dashboard({ plan, onReset, setPlan }: DashboardProps) {
         </Card>
       </div>
 
-      {/* Daily Check-in */}
-      <DailyCheckin plan={plan} setPlan={setPlan} />
-
       {/* Main Content Tabs */}
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
         <div className="overflow-x-auto scrollbar-hide">
@@ -220,21 +217,33 @@ export default function Dashboard({ plan, onReset, setPlan }: DashboardProps) {
               </CardContent>
             </Card>
           </div>
+          
+          {/* Daily Check-in at bottom */}
+          <DailyCheckin plan={plan} setPlan={setPlan} />
         </TabsContent>
 
         {/* Workout Tab */}
-        <TabsContent value="workout">
+        <TabsContent value="workout" className="space-y-6">
           <WorkoutPlan workoutPlan={plan.workoutPlan} />
+          
+          {/* Daily Check-in at bottom */}
+          <DailyCheckin plan={plan} setPlan={setPlan} />
         </TabsContent>
 
         {/* Nutrition Tab */}
-        <TabsContent value="nutrition">
+        <TabsContent value="nutrition" className="space-y-6">
           <NutritionPlan nutritionPlan={plan.nutritionPlan} goal={goal} />
+          
+          {/* Daily Check-in at bottom */}
+          <DailyCheckin plan={plan} setPlan={setPlan} />
         </TabsContent>
 
         {/* Progress Tab */}
-        <TabsContent value="progress">
+        <TabsContent value="progress" className="space-y-6">
           <ProgressTracker plan={plan} setPlan={setPlan} />
+          
+          {/* Daily Check-in at bottom */}
+          <DailyCheckin plan={plan} setPlan={setPlan} />
         </TabsContent>
 
         {/* My Plans Tab */}
@@ -325,6 +334,9 @@ export default function Dashboard({ plan, onReset, setPlan }: DashboardProps) {
               </div>
             </CardContent>
           </Card>
+          
+          {/* Daily Check-in at bottom */}
+          <DailyCheckin plan={plan} setPlan={setPlan} />
         </TabsContent>
 
         {/* Settings Tab */}
@@ -390,6 +402,9 @@ export default function Dashboard({ plan, onReset, setPlan }: DashboardProps) {
               </div>
             </CardContent>
           </Card>
+          
+          {/* Daily Check-in at bottom */}
+          <DailyCheckin plan={plan} setPlan={setPlan} />
         </TabsContent>
       </Tabs>
     </div>
