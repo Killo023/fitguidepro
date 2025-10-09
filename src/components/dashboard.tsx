@@ -127,30 +127,30 @@ export default function Dashboard({ plan, onReset, setPlan }: DashboardProps) {
 
       {/* Main Content Tabs */}
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-        <div className="overflow-x-auto">
-          <TabsList className="grid w-full grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 min-w-max">
-            <TabsTrigger value="overview" className="flex items-center justify-center gap-1 px-2 py-2 text-xs sm:text-sm">
-              <TrendingUp className="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0" />
+        <div className="overflow-x-auto scrollbar-hide">
+          <TabsList className="inline-flex w-max min-w-full h-auto p-1">
+            <TabsTrigger value="overview" className="flex items-center justify-center gap-1 px-3 py-2 text-xs whitespace-nowrap">
+              <TrendingUp className="w-4 h-4 flex-shrink-0" />
               <span className="hidden sm:inline">Overview</span>
             </TabsTrigger>
-            <TabsTrigger value="workout" className="flex items-center justify-center gap-1 px-2 py-2 text-xs sm:text-sm">
-              <Target className="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0" />
+            <TabsTrigger value="workout" className="flex items-center justify-center gap-1 px-3 py-2 text-xs whitespace-nowrap">
+              <Target className="w-4 h-4 flex-shrink-0" />
               <span className="hidden sm:inline">Workouts</span>
             </TabsTrigger>
-            <TabsTrigger value="nutrition" className="flex items-center justify-center gap-1 px-2 py-2 text-xs sm:text-sm">
-              <Calendar className="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0" />
+            <TabsTrigger value="nutrition" className="flex items-center justify-center gap-1 px-3 py-2 text-xs whitespace-nowrap">
+              <Calendar className="w-4 h-4 flex-shrink-0" />
               <span className="hidden sm:inline">Nutrition</span>
             </TabsTrigger>
-            <TabsTrigger value="progress" className="flex items-center justify-center gap-1 px-2 py-2 text-xs sm:text-sm">
-              <TrendingUp className="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0" />
+            <TabsTrigger value="progress" className="flex items-center justify-center gap-1 px-3 py-2 text-xs whitespace-nowrap">
+              <TrendingUp className="w-4 h-4 flex-shrink-0" />
               <span className="hidden sm:inline">Progress</span>
             </TabsTrigger>
-            <TabsTrigger value="plans" className="flex items-center justify-center gap-1 px-2 py-2 text-xs sm:text-sm">
-              <Users className="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0" />
+            <TabsTrigger value="plans" className="flex items-center justify-center gap-1 px-3 py-2 text-xs whitespace-nowrap">
+              <Users className="w-4 h-4 flex-shrink-0" />
               <span className="hidden sm:inline">My Plans</span>
             </TabsTrigger>
-            <TabsTrigger value="settings" className="flex items-center justify-center gap-1 px-2 py-2 text-xs sm:text-sm">
-              <Clock className="w-3 h-3 sm:w-4 sm:h-4 flex-shrink-0" />
+            <TabsTrigger value="settings" className="flex items-center justify-center gap-1 px-3 py-2 text-xs whitespace-nowrap">
+              <Clock className="w-4 h-4 flex-shrink-0" />
               <span className="hidden sm:inline">Settings</span>
             </TabsTrigger>
           </TabsList>
