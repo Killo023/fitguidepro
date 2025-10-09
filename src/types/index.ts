@@ -15,7 +15,7 @@ export interface DailyCheckIn {
 export interface Goal {
   id: string;
   userId: string;
-  goalType: ('weight-loss' | 'weightlifting' | 'fitness')[];
+  goalType: ('weight-loss' | 'weightlifting' | 'fitness')[] | 'weight-loss' | 'weightlifting' | 'fitness'; // Support both array and string for backward compatibility
   gender: 'male' | 'female';
   startDate: Date;
   targetDate: Date;

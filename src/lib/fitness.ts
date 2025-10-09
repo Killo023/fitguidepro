@@ -621,8 +621,15 @@ export const generateFitnessPlan = (formData: any): FitnessPlan => {
   const goalId = `goal_${formData.userId}_${new Date().getTime()}`;
   const bmi = calculateBMI(formData.currentWeight, formData.height);
 
+  // Ensure goalType is always an array for backward compatibility
+  let goalType = formData.goalType;
+  if (!Array.isArray(goalType)) {
+    goalType = [goalType];
+  }
+
   const goal: Goal = {
     ...formData,
+    goalType,
     id: goalId,
     startDate: new Date(),
     targetDate: new Date(new Date().setMonth(new Date().getMonth() + 3)),
