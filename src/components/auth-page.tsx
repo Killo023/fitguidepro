@@ -35,6 +35,17 @@ export default function AuthPage() {
             </div>
           </div>
           <div className="hidden bg-muted lg:block relative overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center">
+              <div className="text-center text-muted-foreground">
+                <div className="w-16 h-16 mx-auto mb-4 bg-primary/20 rounded-full flex items-center justify-center">
+                  <svg className="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                  </svg>
+                </div>
+                <p className="text-sm font-medium">FitGuide Pro</p>
+                <p className="text-xs opacity-75">AI-Powered Fitness</p>
+              </div>
+            </div>
             <Image
               data-ai-hint="gym fitness"
               src={placeholderImages.auth}
@@ -46,9 +57,12 @@ export default function AuthPage() {
               blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
               sizes="(max-width: 768px) 0vw, 50vw"
               onError={(e) => {
-                console.error('Auth image failed to load:', e);
-                // Fallback to a different image
-                e.currentTarget.src = 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=2070&auto=format&fit=crop';
+                console.error('Auth image failed to load, trying fallback:', e);
+                // Try fallback image
+                e.currentTarget.src = placeholderImages.authFallback;
+              }}
+              onLoad={() => {
+                console.log('Auth image loaded successfully');
               }}
             />
           </div>
