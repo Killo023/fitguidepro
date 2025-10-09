@@ -49,7 +49,7 @@ const generateWeightLossPlan = (goal: Goal): { workoutPlan: WorkoutPlan, nutriti
   let routine: { day: string; title: string; exercises: Exercise[]; isRestDay?: boolean }[] = [];
   
   if (goal.activityLevel === 'sedentary') {
-    // 2-3 workout days for sedentary users
+    // 3 workout days for sedentary users
     routine = [
       { day: 'Monday', title: 'Light Full Body Strength', exercises: [
           { name: 'Bodyweight Squats', type: 'Strength', sets: '2-3', reps: '10-12' },
@@ -65,7 +65,7 @@ const generateWeightLossPlan = (goal: Goal): { workoutPlan: WorkoutPlan, nutriti
           { name: 'Light Stretching', type: 'Flexibility', duration: '15-20 min' }
       ] },
       { day: 'Saturday', title: 'Rest Day', exercises: [], isRestDay: true },
-      { day: 'Sunday', title: 'Active Recovery', exercises: [{ name: 'Gentle Yoga or Walking', type: 'Flexibility', duration: '20-30 min' }] },
+      { day: 'Sunday', title: 'Rest Day', exercises: [], isRestDay: true },
     ];
   } else if (goal.activityLevel === 'light') {
     // 3-4 workout days for light activity users
@@ -185,7 +185,7 @@ const generateWeightliftingPlan = (goal: Goal): { workoutPlan: WorkoutPlan, nutr
   let routine: { day: string; title: string; exercises: Exercise[]; isRestDay?: boolean }[] = [];
   
   if (goal.activityLevel === 'sedentary') {
-    // 3-4 workout days for sedentary users (beginner-friendly)
+    // 3 workout days for sedentary users (beginner-friendly)
     routine = [
       { day: 'Monday', title: 'Full Body (Beginner)', exercises: [
           { name: 'Bodyweight Squats', type: 'Strength', sets: '3', reps: '10-12' },
@@ -207,7 +207,7 @@ const generateWeightliftingPlan = (goal: Goal): { workoutPlan: WorkoutPlan, nutr
           { name: 'Lunges', type: 'Strength', sets: '3', reps: '8-10 per leg' },
           { name: 'Calf Raises', type: 'Strength', sets: '3', reps: '12-15' }
       ] },
-      { day: 'Sunday', title: 'Active Recovery', exercises: [{ name: 'Light Walking or Yoga', type: 'Flexibility', duration: '20-30 min' }] },
+      { day: 'Sunday', title: 'Rest Day', exercises: [], isRestDay: true },
     ];
   } else if (goal.activityLevel === 'light') {
     // 4 workout days for light activity users
@@ -342,7 +342,7 @@ const generateGeneralFitnessPlan = (goal: Goal): { workoutPlan: WorkoutPlan, nut
   let routine: { day: string; title: string; exercises: Exercise[]; isRestDay?: boolean }[] = [];
   
   if (goal.activityLevel === 'sedentary') {
-    // 2-3 workout days for sedentary users
+    // 3 workout days for sedentary users
     routine = [
       { day: 'Monday', title: 'Light Full Body', exercises: [
           { name: 'Bodyweight Squats', type: 'Strength', sets: '2-3', reps: '10-12' },
@@ -354,7 +354,7 @@ const generateGeneralFitnessPlan = (goal: Goal): { workoutPlan: WorkoutPlan, nut
       { day: 'Thursday', title: 'Gentle Cardio', exercises: [{ name: 'Brisk Walking or Swimming', type: 'Cardio', duration: '25-35 min' }] },
       { day: 'Friday', title: 'Rest Day', exercises: [], isRestDay: true },
       { day: 'Saturday', title: 'Rest Day', exercises: [], isRestDay: true },
-      { day: 'Sunday', title: 'Active Recovery', exercises: [{ name: 'Gentle Yoga or Light Walk', type: 'Flexibility', duration: '20-30 min' }] },
+      { day: 'Sunday', title: 'Rest Day', exercises: [], isRestDay: true },
     ];
   } else if (goal.activityLevel === 'light') {
     // 3-4 workout days for light activity users
