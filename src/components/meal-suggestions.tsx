@@ -3,11 +3,11 @@
 import { useState } from 'react';
 import { suggestDailyMealPlan } from '@/ai/flows/suggest-meal-replacements';
 import { Button } from '@/components/ui/button';
-import { Sparkles, Loader2, Apple, Beef, Wheat, Wind } from 'lucide-react';
+import { Sparkles, Loader2, Apple, Beef, Wheat, Wind, Calendar } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from './ui/card';
 import { Alert, AlertDescription, AlertTitle } from './ui/alert';
 import { useToast } from '@/hooks/use-toast';
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from './ui/accordion';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
 
 interface MealSuggestionsProps {
   dailyCalories: number;
@@ -64,6 +64,7 @@ export default function MealSuggestions({
   const [loadingDay, setLoadingDay] = useState<string | null>(null);
   const [suggestions, setSuggestions] = useState<WeeklyPlan>({});
   const [error, setError] = useState<string | null>(null);
+  const [activeTab, setActiveTab] = useState("Monday");
   const { toast } = useToast();
 
   const getSuggestionsForDay = async (day: string) => {
@@ -115,16 +116,12 @@ export default function MealSuggestions({
     
     if (!dailyPlan) {
         return (
-            <div className="p-4 text-center">
-                <Button 
-                    onClick={() => getSuggestionsForDay(day)}
-                    className="w-full sm:w-auto min-w-[200px] max-w-full px-4 py-2 text-sm sm:text-base"
-                >
-                    <Sparkles className="mr-2 h-4 w-4 flex-shrink-0" />
-                    <span className="truncate sm:whitespace-normal">
-                        Generate Meal Plan for {day}
-                    </span>
-                </Button>
+            <div className="p-8 text-center text-muted-foreground">
+                <div className="space-y-2">
+                    <Calendar className="w-12 h-12 mx-auto opacity-50" />
+                    <p className="text-lg font-medium">No meal plan generated yet</p>
+                    <p className="text-sm">Click "Generate Plan" above to create your personalized meal plan for {day}</p>
+                </div>
             </div>
         )
     }
@@ -181,8 +178,11 @@ export default function MealSuggestions({
   return (
     <Card className="bg-secondary/50">
       <CardHeader>
-        <CardTitle className="text-lg">AI-Powered Daily Meal Planner</CardTitle>
-        <CardDescription>Generate a personalized meal plan for each day of the week.</CardDescription>
+        <CardTitle className="flex items-center gap-2 text-lg">
+          <Calendar className="w-5 h-5" />
+          AI-Powered Daily Meal Planner
+        </CardTitle>
+        <CardDescription>Generate personalized meal plans for each day of the week. Click on any day to view or generate your meal plan.</CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
         {error && (
@@ -191,19 +191,46 @@ export default function MealSuggestions({
                 <AlertDescription>{error}</AlertDescription>
             </Alert>
         )}
-        <Accordion type="single" collapsible className="w-full">
-            {daysOfWeek.map((day) => {
-                const dailyPlan = suggestions[day as keyof WeeklyPlan];
-                return (
-                    <AccordionItem value={day} key={day}>
-                        <AccordionTrigger className="font-semibold text-base">{day}</AccordionTrigger>
-                        <AccordionContent>
-                           {renderDayContent(day, dailyPlan!)}
-                        </AccordionContent>
-                    </AccordionItem>
-                )
-            })}
-        </Accordion>
+        
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+          <div className="overflow-x-auto">
+            <TabsList className="inline-flex w-max min-w-full h-auto p-1 bg-gray-100 dark:bg-gray-800 rounded-lg">
+              {daysOfWeek.map((day) => (
+                <TabsTrigger 
+                  key={day}
+                  value={day}
+                  className="flex items-center justify-center gap-1 px-3 py-2 text-xs font-medium whitespace-nowrap min-w-[60px] h-auto data-[state=active]:bg-primary data-[state=active]:text-white data-[state=inactive]:text-gray-700 data-[state=inactive]:dark:text-gray-300 data-[state=inactive]:hover:bg-gray-200 data-[state=inactive]:dark:hover:bg-gray-700 transition-colors"
+                >
+                  <span className="text-xs sm:text-sm">{day.slice(0, 3)}</span>
+                </TabsTrigger>
+              ))}
+            </TabsList>
+          </div>
+
+          {daysOfWeek.map((day) => {
+            const dailyPlan = suggestions[day as keyof WeeklyPlan];
+            return (
+              <TabsContent key={day} value={day} className="mt-6">
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <h3 className="text-lg font-semibold">{day} Meal Plan</h3>
+                    {!dailyPlan && (
+                      <Button 
+                        onClick={() => getSuggestionsForDay(day)}
+                        size="sm"
+                        className="min-w-[160px]"
+                      >
+                        <Sparkles className="mr-2 h-4 w-4 flex-shrink-0" />
+                        <span className="truncate">Generate Plan</span>
+                      </Button>
+                    )}
+                  </div>
+                  {renderDayContent(day, dailyPlan!)}
+                </div>
+              </TabsContent>
+            );
+          })}
+        </Tabs>
       </CardContent>
     </Card>
   );
