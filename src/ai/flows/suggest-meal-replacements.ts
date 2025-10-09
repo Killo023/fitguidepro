@@ -86,18 +86,32 @@ const prompt = ai.definePrompt({
   
   The user's diet preference is {{dietPreference}}.
   The user's primary fitness goal is {{goalType}}.
-  Today is {{dayOfWeek}}. Please generate a plan for this day.
+  Today is {{dayOfWeek}}. Please generate a UNIQUE plan specifically for this day.
 
   IMPORTANT: You must adhere to the following dietary restrictions:
   - Allergies: DO NOT include any meals containing these ingredients: {{#if allergies}}{{allergies}}{{else}}None specified{{/if}}.
   - Disliked Foods: DO NOT include any meals containing these ingredients: {{#if dislikedFoods}}{{dislikedFoods}}{{else}}None specified{{/if}}.
   - Lactose Intolerance: {{#if isLactoseIntolerant}}The user is lactose intolerant. All suggestions must be dairy-free or use lactose-free alternatives.{{else}}Not applicable.{{/if}}
 
-  Generate a comprehensive and varied eating plan for {{dayOfWeek}}. 
+  CRITICAL REQUIREMENT FOR VARIETY:
+  - Generate COMPLETELY DIFFERENT and UNIQUE meals for {{dayOfWeek}} that are distinct from typical meal plans
+  - DO NOT use generic or repetitive meal combinations (e.g., always suggesting chicken breast with rice)
+  - Create DIVERSE meal options using different protein sources, cooking methods, cuisines, and ingredients
+  - Each day of the week should have a DIFFERENT theme or cultural cuisine influence (e.g., Mediterranean Monday, Asian Tuesday, Mexican Wednesday, etc.)
+  - Use CREATIVE and VARIED ingredient combinations to keep meals interesting and prevent food fatigue
+  - For {{dayOfWeek}}, select unique protein sources, vegetables, grains, and preparation methods that differ from standard meal prep suggestions
+  
+  Examples of variety:
+  - Protein variety: chicken, fish, beef, pork, turkey, eggs, tofu, tempeh, legumes, seafood
+  - Grain variety: rice, quinoa, pasta, couscous, bulgur, farro, buckwheat, oats
+  - Cooking methods: grilled, baked, stir-fried, roasted, steamed, pan-seared, slow-cooked
+  - Cuisine styles: Mediterranean, Asian, Mexican, Indian, Middle Eastern, American, Italian
+
+  Generate a comprehensive and HIGHLY VARIED eating plan for {{dayOfWeek}}. 
   Provide suggestions for Breakfast, Lunch, Dinner, and Snacks.
-  For each meal, provide a few different options.
+  For each meal, provide a few different options (at least 2-3 options per meal type).
   For each suggestion, provide the following details:
-  - 'name': The name of the meal.
+  - 'name': The name of the meal (be creative and specific).
   - 'ingredients': A list of all ingredients with specific quantities (e.g., "150g salmon fillet", "1 cup quinoa", "1/2 avocado").
   - 'nutrition': An object with the estimated 'calories', 'protein', 'carbs', and 'fat' in grams for the meal.
   - 'reason': A brief explanation of how the meal helps the user achieve their specific fitness goal (e.g., 'High in protein to support muscle repair for weightlifting' or 'Low in calories but high in fiber to keep you full for weight loss').
@@ -113,7 +127,13 @@ const suggestDailyMealPlanFlow = ai.defineFlow(
     outputSchema: SuggestDailyMealPlanOutputSchema,
   },
   async input => {
-    const {output} = await prompt(input);
+    const {output} = await prompt({
+      ...input,
+      config: {
+        temperature: 1.2, // Higher temperature for more creative and varied responses
+        topP: 0.95, // Increases diversity in token selection
+      }
+    });
     return output!;
   }
 );
