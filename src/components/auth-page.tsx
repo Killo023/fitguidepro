@@ -34,13 +34,22 @@ export default function AuthPage() {
                 {renderView()}
             </div>
           </div>
-          <div className="hidden bg-muted lg:block relative">
+          <div className="hidden bg-muted lg:block relative overflow-hidden">
             <Image
               data-ai-hint="gym fitness"
               src={placeholderImages.auth}
-              alt="Image"
+              alt="Fitness enthusiast working out in modern gym with weights and equipment"
               fill
               className="h-full w-full object-cover dark:brightness-[0.3]"
+              priority
+              placeholder="blur"
+              blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
+              sizes="(max-width: 768px) 0vw, 50vw"
+              onError={(e) => {
+                console.error('Auth image failed to load:', e);
+                // Fallback to a different image
+                e.currentTarget.src = 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=2070&auto=format&fit=crop';
+              }}
             />
           </div>
         </div>
