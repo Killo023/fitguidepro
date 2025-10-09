@@ -279,8 +279,10 @@ export default function Dashboard({ plan, onReset, setPlan }: DashboardProps) {
                         </div>
                         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
                           <div className="text-center p-3 bg-background/50 rounded-lg">
-                            <p className="text-sm text-muted-foreground">Goal Type</p>
-                            <p className="font-semibold capitalize">{goal.goalType.replace('-', ' ')}</p>
+                            <p className="text-sm text-muted-foreground">Goal{goal.goalType.length > 1 ? 's' : ''}</p>
+                            <p className="font-semibold capitalize text-sm">
+                              {goal.goalType.map(g => g.replace('-', ' ')).join(' + ')}
+                            </p>
                           </div>
                           <div className="text-center p-3 bg-background/50 rounded-lg">
                             <p className="text-sm text-muted-foreground">Current Weight</p>

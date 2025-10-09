@@ -34,7 +34,7 @@ import { inchesToCm, lbsToKg } from '@/lib/utils';
 
 
 const formSchema = z.object({
-  goalType: z.enum(['weight-loss', 'weightlifting', 'fitness']),
+  goalType: z.array(z.enum(['weight-loss', 'weightlifting', 'fitness'])).min(1, 'Select at least one goal').max(2, 'Select maximum 2 goals'),
   gender: z.enum(['male', 'female']),
   currentWeight: z.coerce.number().positive('Must be positive'),
   targetWeight: z.coerce.number().positive('Must be positive'),
@@ -72,7 +72,7 @@ export default function GoalForm({ onPlanGenerated }: GoalFormProps) {
   const form = useForm<GoalFormValues>({
     resolver: zodResolver(formSchema),
     values: {
-        goalType: 'weight-loss',
+        goalType: ['weight-loss'],
         gender: 'male',
         currentWeight: defaultUnits === 'metric' ? 70 : 155,
         targetWeight: defaultUnits === 'metric' ? 65 : 145,
@@ -89,7 +89,7 @@ export default function GoalForm({ onPlanGenerated }: GoalFormProps) {
   
   useEffect(() => {
     form.reset({
-        goalType: 'weight-loss',
+        goalType: ['weight-loss'],
         gender: 'male',
         currentWeight: defaultUnits === 'metric' ? 70 : 155,
         targetWeight: defaultUnits === 'metric' ? 65 : 145,
@@ -182,29 +182,59 @@ export default function GoalForm({ onPlanGenerated }: GoalFormProps) {
                             )}
                         />
 
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <FormField
                             control={form.control}
                             name="goalType"
-                            render={({ field }) => (
+                            render={() => (
                             <FormItem>
-                                <FormLabel>Primary Goal</FormLabel>
-                                <Select onValueChange={field.onChange} defaultValue={field.value}>
-                                <FormControl>
-                                    <SelectTrigger>
-                                    <SelectValue placeholder="Select your main goal" />
-                                    </SelectTrigger>
-                                </FormControl>
-                                <SelectContent>
-                                    <SelectItem value="weight-loss">Weight Loss</SelectItem>
-                                    <SelectItem value="weightlifting">Muscle Building</SelectItem>
-                                    <SelectItem value="fitness">General Fitness</SelectItem>
-                                </SelectContent>
-                                </Select>
+                                <div className="mb-4">
+                                <FormLabel className="text-base">Fitness Goals (Select 1-2)</FormLabel>
+                                <FormDescription>
+                                    Choose up to 2 goals for a combined plan
+                                </FormDescription>
+                                </div>
+                                {[
+                                { id: 'weight-loss', label: 'Weight Loss' },
+                                { id: 'weightlifting', label: 'Muscle Building' },
+                                { id: 'fitness', label: 'General Fitness' },
+                                ].map((item) => (
+                                <FormField
+                                    key={item.id}
+                                    control={form.control}
+                                    name="goalType"
+                                    render={({ field }) => {
+                                    return (
+                                        <FormItem
+                                        key={item.id}
+                                        className="flex flex-row items-start space-x-3 space-y-0"
+                                        >
+                                        <FormControl>
+                                            <Checkbox
+                                            checked={field.value?.includes(item.id as any)}
+                                            onCheckedChange={(checked) => {
+                                                return checked
+                                                ? field.onChange([...field.value, item.id])
+                                                : field.onChange(
+                                                    field.value?.filter(
+                                                        (value: string) => value !== item.id
+                                                    )
+                                                    )
+                                            }}
+                                            />
+                                        </FormControl>
+                                        <FormLabel className="font-normal">
+                                            {item.label}
+                                        </FormLabel>
+                                        </FormItem>
+                                    )
+                                    }}
+                                />
+                                ))}
                                 <FormMessage />
                             </FormItem>
                             )}
                         />
+                        <div className="grid grid-cols-1 gap-4">
                         <FormField
                             control={form.control}
                             name="gender"

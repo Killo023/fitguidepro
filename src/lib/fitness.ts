@@ -442,6 +442,181 @@ const generateGeneralFitnessPlan = (goal: Goal): { workoutPlan: WorkoutPlan, nut
 };
 
 
+// Combined plan for multiple goals (e.g., Weight Loss + Muscle Building)
+const generateCombinedPlan = (goal: Goal): { workoutPlan: WorkoutPlan, nutritionPlan: NutritionPlan } => {
+  const bmr = calculateBMR(goal);
+  const tdee = bmr * ACTIVITY_MULTIPLIERS[goal.activityLevel];
+  
+  const goals = goal.goalType;
+  const hasWeightLoss = goals.includes('weight-loss');
+  const hasMuscleBuilding = goals.includes('weightlifting');
+  const hasFitness = goals.includes('fitness');
+  
+  // Nutrition: Balance between goals
+  let calorieTarget = tdee;
+  let proteinRatio = 0.25;
+  let carbsRatio = 0.5;
+  let fatRatio = 0.25;
+  
+  if (hasWeightLoss && hasMuscleBuilding) {
+    // Body recomposition: Slight deficit with high protein
+    calorieTarget = tdee - 250; // Smaller deficit for muscle preservation
+    proteinRatio = 0.35; // Higher protein for muscle building
+    carbsRatio = 0.35;
+    fatRatio = 0.3;
+  } else if (hasWeightLoss && hasFitness) {
+    // Weight loss with general fitness
+    calorieTarget = tdee - 400;
+    proteinRatio = 0.3;
+    carbsRatio = 0.4;
+    fatRatio = 0.3;
+  } else if (hasMuscleBuilding && hasFitness) {
+    // Muscle building with endurance
+    calorieTarget = tdee + 200;
+    proteinRatio = 0.3;
+    carbsRatio = 0.45;
+    fatRatio = 0.25;
+  }
+  
+  const nutritionPlan: NutritionPlan = {
+    id: `nut_${goal.id}`,
+    goalId: goal.id,
+    dailyCalories: Math.round(calorieTarget),
+    macros: {
+      protein: Math.round((calorieTarget * proteinRatio) / 4),
+      carbs: Math.round((calorieTarget * carbsRatio) / 4),
+      fat: Math.round((calorieTarget * fatRatio) / 9),
+    },
+    mealPlan: [
+      { meal: 'Breakfast', items: ['High-protein oatmeal with Greek yogurt and berries'] },
+      { meal: 'Lunch', items: ['Grilled chicken with quinoa and roasted vegetables'] },
+      { meal: 'Dinner', items: ['Lean salmon with sweet potato and broccoli'] },
+      { meal: 'Snack', items: ['Protein shake or mixed nuts'] },
+    ],
+  };
+  
+  // Workout: Combine cardio and strength based on activity level
+  let routine: { day: string; title: string; exercises: Exercise[]; isRestDay?: boolean }[] = [];
+  
+  if (goal.activityLevel === 'sedentary') {
+    routine = [
+      { day: 'Monday', title: 'Full Body Strength', exercises: [
+          { name: 'Squats', type: 'Strength', sets: '3', reps: '10-12' },
+          { name: 'Push-ups', type: 'Strength', sets: '3', reps: '8-10' },
+          { name: 'Dumbbell Rows', type: 'Strength', sets: '3', reps: '10-12' },
+          { name: 'Light Cardio', type: 'Cardio', duration: '15-20 min' }
+      ] },
+      { day: 'Tuesday', title: 'Rest Day', exercises: [], isRestDay: true },
+      { day: 'Wednesday', title: 'Cardio & Core', exercises: [
+          { name: 'Brisk Walking', type: 'Cardio', duration: '25-30 min' },
+          { name: 'Plank', type: 'Core', duration: '3 sets x 30-45s' },
+          { name: 'Crunches', type: 'Core', sets: '3', reps: '12-15' }
+      ] },
+      { day: 'Thursday', title: 'Rest Day', exercises: [], isRestDay: true },
+      { day: 'Friday', title: 'Upper Body & Cardio', exercises: [
+          { name: 'Dumbbell Press', type: 'Strength', sets: '3', reps: '10-12' },
+          { name: 'Bicep Curls', type: 'Strength', sets: '3', reps: '10-12' },
+          { name: 'Light Jogging', type: 'Cardio', duration: '15-20 min' }
+      ] },
+      { day: 'Saturday', title: 'Rest Day', exercises: [], isRestDay: true },
+      { day: 'Sunday', title: 'Rest Day', exercises: [], isRestDay: true },
+    ];
+  } else if (goal.activityLevel === 'light') {
+    routine = [
+      { day: 'Monday', title: 'Strength & Cardio', exercises: [
+          { name: 'Squats', type: 'Strength', sets: '3', reps: '12-15' },
+          { name: 'Push-ups', type: 'Strength', sets: '3', reps: '10-12' },
+          { name: 'Running', type: 'Cardio', duration: '20-25 min' }
+      ] },
+      { day: 'Tuesday', title: 'Rest Day', exercises: [], isRestDay: true },
+      { day: 'Wednesday', title: 'Full Body Circuit', exercises: [
+          { name: 'Lunges', type: 'Strength', sets: '3', reps: '12-15 per leg' },
+          { name: 'Dumbbell Rows', type: 'Strength', sets: '3', reps: '10-12' },
+          { name: 'Burpees', type: 'HIIT', duration: '3 sets of 30s' }
+      ] },
+      { day: 'Thursday', title: 'Cardio Day', exercises: [
+          { name: 'Cycling or Swimming', type: 'Cardio', duration: '30-35 min' }
+      ] },
+      { day: 'Friday', title: 'Rest Day', exercises: [], isRestDay: true },
+      { day: 'Saturday', title: 'Total Body', exercises: [
+          { name: 'Deadlifts (Light)', type: 'Strength', sets: '3', reps: '10-12' },
+          { name: 'Shoulder Press', type: 'Strength', sets: '3', reps: '10-12' },
+          { name: 'Core Circuit', type: 'Core', duration: '10-15 min' }
+      ] },
+      { day: 'Sunday', title: 'Rest Day', exercises: [], isRestDay: true },
+    ];
+  } else if (goal.activityLevel === 'moderate') {
+    routine = [
+      { day: 'Monday', title: 'Upper Body Strength', exercises: [
+          { name: 'Bench Press', type: 'Strength', sets: '4', reps: '8-10' },
+          { name: 'Pull-ups', type: 'Strength', sets: '3', reps: '6-10' },
+          { name: 'Shoulder Press', type: 'Strength', sets: '3', reps: '10-12' },
+          { name: 'Light Cardio', type: 'Cardio', duration: '15-20 min' }
+      ] },
+      { day: 'Tuesday', title: 'HIIT Cardio', exercises: [
+          { name: 'HIIT Intervals', type: 'HIIT', duration: '25-30 min' },
+          { name: 'Core Work', type: 'Core', duration: '10 min' }
+      ] },
+      { day: 'Wednesday', title: 'Rest Day', exercises: [], isRestDay: true },
+      { day: 'Thursday', title: 'Lower Body Strength', exercises: [
+          { name: 'Squats', type: 'Strength', sets: '4', reps: '8-12' },
+          { name: 'Deadlifts', type: 'Strength', sets: '3', reps: '6-8' },
+          { name: 'Lunges', type: 'Strength', sets: '3', reps: '12-15 per leg' }
+      ] },
+      { day: 'Friday', title: 'Cardio & Core', exercises: [
+          { name: 'Running or Cycling', type: 'Cardio', duration: '30-40 min' },
+          { name: 'Ab Circuit', type: 'Core', duration: '15 min' }
+      ] },
+      { day: 'Saturday', title: 'Full Body Circuit', exercises: [
+          { name: 'Kettlebell Swings', type: 'Strength', duration: '3 sets of 45s' },
+          { name: 'Burpees', type: 'HIIT', duration: '3 sets of 45s' },
+          { name: 'Plank Variations', type: 'Core', duration: '3 sets of 60s' }
+      ] },
+      { day: 'Sunday', title: 'Active Recovery', exercises: [{ name: 'Yoga or Light Walk', type: 'Flexibility', duration: '30-45 min' }] },
+    ];
+  } else if (goal.activityLevel === 'active') {
+    routine = [
+      { day: 'Monday', title: 'Upper Body Strength', exercises: [
+          { name: 'Bench Press', type: 'Strength', sets: '5', reps: '5' },
+          { name: 'Pull-ups', type: 'Strength', sets: '4', reps: '8-12' },
+          { name: 'Overhead Press', type: 'Strength', sets: '4', reps: '6-8' },
+          { name: 'Bicep & Tricep Superset', type: 'Strength', sets: '3', reps: '10-12' }
+      ] },
+      { day: 'Tuesday', title: 'HIIT & Cardio', exercises: [
+          { name: 'Sprint Intervals', type: 'HIIT', duration: '25-30 min' },
+          { name: 'Battle Ropes', type: 'HIIT', duration: '3 sets of 45s' },
+          { name: 'Core Finisher', type: 'Core', duration: '10-15 min' }
+      ] },
+      { day: 'Wednesday', title: 'Lower Body Strength', exercises: [
+          { name: 'Squats', type: 'Strength', sets: '5', reps: '5' },
+          { name: 'Deadlifts', type: 'Strength', sets: '4', reps: '6-8' },
+          { name: 'Leg Press', type: 'Strength', sets: '4', reps: '10-12' },
+          { name: 'Calf Raises', type: 'Strength', sets: '4', reps: '15-20' }
+      ] },
+      { day: 'Thursday', title: 'Cardio Endurance', exercises: [
+          { name: 'Running or Cycling', type: 'Cardio', duration: '40-50 min' }
+      ] },
+      { day: 'Friday', title: 'Full Body Power', exercises: [
+          { name: 'Power Cleans', type: 'Strength', sets: '4', reps: '3-5' },
+          { name: 'Box Jumps', type: 'Plyometric', sets: '4', reps: '5-8' },
+          { name: 'Burpees', type: 'HIIT', duration: '4 sets of 60s' },
+          { name: 'Core Circuit', type: 'Core', duration: '15 min' }
+      ] },
+      { day: 'Saturday', title: 'Active Recovery', exercises: [{ name: 'Yoga or Swimming', type: 'Flexibility', duration: '45-60 min' }] },
+      { day: 'Sunday', title: 'Rest Day', exercises: [], isRestDay: true },
+    ];
+  }
+  
+  const workoutPlan: WorkoutPlan = {
+    id: `wp_${goal.id}`,
+    goalId: goal.id,
+    routine: routine,
+    createdAt: new Date(),
+  };
+  
+  return { workoutPlan, nutritionPlan };
+};
+
 export const generateFitnessPlan = (formData: any): FitnessPlan => {
   const goalId = `goal_${formData.userId}_${new Date().getTime()}`;
   const bmi = calculateBMI(formData.currentWeight, formData.height);
@@ -456,12 +631,21 @@ export const generateFitnessPlan = (formData: any): FitnessPlan => {
   };
 
   let plans;
-  if (goal.goalType === 'weight-loss') {
-    plans = generateWeightLossPlan(goal);
-  } else if (goal.goalType === 'weightlifting') {
-    plans = generateWeightliftingPlan(goal);
+  const goals = goal.goalType;
+  
+  // Check if user has multiple goals
+  if (goals.length > 1) {
+    plans = generateCombinedPlan(goal);
   } else {
-    plans = generateGeneralFitnessPlan(goal);
+    // Single goal logic
+    const singleGoal = goals[0];
+    if (singleGoal === 'weight-loss') {
+      plans = generateWeightLossPlan(goal);
+    } else if (singleGoal === 'weightlifting') {
+      plans = generateWeightliftingPlan(goal);
+    } else {
+      plans = generateGeneralFitnessPlan(goal);
+    }
   }
 
   return {

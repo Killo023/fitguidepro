@@ -77,7 +77,7 @@ export default function ProgressTracker({ plan, setPlan }: ProgressTrackerProps)
   const displayTargetWeight = goal.units === 'imperial' ? kgToLbs(goal.targetWeight) : goal.targetWeight;
 
   const weightDifference = (displayCurrentWeight - displayTargetWeight).toFixed(1);
-  const isLosing = goal.goalType === 'weight-loss';
+  const isLosing = goal.goalType.includes('weight-loss');
 
   return (
     <Card>

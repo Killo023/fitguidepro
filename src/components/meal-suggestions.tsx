@@ -13,7 +13,7 @@ interface MealSuggestionsProps {
   dailyCalories: number;
   macros: { protein: number; carbs: number; fat: number; };
   dietPreference: string;
-  goalType: 'weight-loss' | 'weightlifting' | 'fitness';
+  goalType: ('weight-loss' | 'weightlifting' | 'fitness')[];
   allergies?: string;
   dislikedFoods?: string;
   isLactoseIntolerant?: boolean;
