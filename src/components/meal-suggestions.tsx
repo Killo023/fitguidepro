@@ -107,8 +107,8 @@ export default function MealSuggestions({
     if (loadingDay === day) {
         return (
             <div className="flex items-center justify-center p-4">
-                <Loader2 className="mr-2 h-6 w-6 animate-spin" />
-                <p>Generating plan for {day}...</p>
+                <Loader2 className="mr-2 h-6 w-6 animate-spin flex-shrink-0" />
+                <p className="text-sm sm:text-base">Generating plan for {day}...</p>
             </div>
         )
     }
@@ -116,9 +116,14 @@ export default function MealSuggestions({
     if (!dailyPlan) {
         return (
             <div className="p-4 text-center">
-                <Button onClick={() => getSuggestionsForDay(day)}>
-                    <Sparkles className="mr-2 h-4 w-4" />
-                    Generate Meal Plan for {day}
+                <Button 
+                    onClick={() => getSuggestionsForDay(day)}
+                    className="w-full sm:w-auto min-w-[200px] max-w-full px-4 py-2 text-sm sm:text-base"
+                >
+                    <Sparkles className="mr-2 h-4 w-4 flex-shrink-0" />
+                    <span className="truncate sm:whitespace-normal">
+                        Generate Meal Plan for {day}
+                    </span>
                 </Button>
             </div>
         )
