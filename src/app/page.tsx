@@ -6,7 +6,6 @@ import Image from 'next/image';
 import type { FitnessPlan } from '@/types';
 import GoalForm from '@/components/goal-form';
 import Dashboard from '@/components/dashboard';
-import { LogoIcon } from '@/components/icons';
 import { generateFitnessPlan } from '@/lib/fitness';
 import { onAuthStateChanged, User } from 'firebase/auth';
 import { auth, db } from '@/lib/firebase';
@@ -124,10 +123,16 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-background text-foreground">
       <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="container mx-auto flex h-16 max-w-7xl items-center justify-between">
+        <div className="container mx-auto flex h-16 max-w-7xl items-center justify-between px-4">
           <div className="flex items-center gap-3">
-            <LogoIcon className="h-8 w-auto text-primary" />
-            <h1 className="text-2xl font-headline font-bold tracking-wider uppercase hidden md:block">FitGuide Pro</h1>
+            <Image 
+              src="/logo.png" 
+              alt="FitGuide Pro Logo" 
+              width={200} 
+              height={60} 
+              className="h-10 w-auto"
+              priority
+            />
           </div>
           <div className="flex items-center gap-4">
             {user ? (
