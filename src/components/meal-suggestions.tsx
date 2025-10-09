@@ -118,12 +118,10 @@ export default function MealSuggestions({
             <div className="p-4 text-center">
                 <Button 
                     onClick={() => getSuggestionsForDay(day)}
-                    className="w-full sm:w-auto min-w-[200px] max-w-full px-4 py-2 text-sm sm:text-base"
+                    className="w-full sm:w-auto min-w-[120px] px-4 py-2 text-sm sm:text-base"
                 >
                     <Sparkles className="mr-2 h-4 w-4 flex-shrink-0" />
-                    <span className="truncate sm:whitespace-normal">
-                        Generate Meal Plan for {day}
-                    </span>
+                    Generate
                 </Button>
             </div>
         )
