@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import { suggestDailyMealPlan } from '@/ai/flows/suggest-meal-replacements';
 import { Button } from '@/components/ui/button';
 import { Sparkles, Loader2, Apple, Beef, Wheat, Wind } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from './ui/card';
@@ -70,21 +69,36 @@ export default function MealSuggestions({
     setLoadingDay(day);
     setError(null);
     try {
-      const response = await suggestDailyMealPlan({
-        dailyCalories,
-        macros,
-        dietPreference,
-        goalType,
-        allergies,
-        dislikedFoods,
-        isLactoseIntolerant,
-        dayOfWeek: day,
+      const response = await fetch('/api/genkit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          flow: 'suggestDailyMealPlanFlow',
+          input: {
+            dailyCalories,
+            macros,
+            dietPreference,
+            goalType,
+            allergies,
+            dislikedFoods,
+            isLactoseIntolerant,
+            dayOfWeek: day,
+          }
+        }),
       });
 
-      if (response && response.plan) {
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      
+      if (data && data.plan) {
         setSuggestions(prev => ({
             ...prev,
-            [day]: response.plan
+            [day]: data.plan
         }));
       } else {
         throw new Error(`Received no suggestions from the AI for ${day}.`);
