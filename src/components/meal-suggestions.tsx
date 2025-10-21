@@ -75,7 +75,6 @@ export default function MealSuggestions({
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          flow: 'suggestDailyMealPlanFlow',
           input: {
             dailyCalories,
             macros,
@@ -94,7 +93,7 @@ export default function MealSuggestions({
       }
 
       const data = await response.json();
-      
+      // appRoute returns the flow output directly
       if (data && data.plan) {
         setSuggestions(prev => ({
             ...prev,

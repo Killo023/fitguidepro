@@ -150,7 +150,7 @@ const prompt = ai.definePrompt({
 `,
 });
 
-const suggestDailyMealPlanFlow = ai.defineFlow(
+export const suggestDailyMealPlanFlow = ai.defineFlow(
   {
     name: 'suggestDailyMealPlanFlow',
     inputSchema: SuggestDailyMealPlanInputSchema,
