@@ -69,6 +69,7 @@ export default function MealSuggestions({
     setLoadingDay(day);
     setError(null);
     try {
+      console.log('Making request to /api/genkit for day:', day);
       const response = await fetch('/api/genkit', {
         method: 'POST',
         headers: {
@@ -88,11 +89,18 @@ export default function MealSuggestions({
         }),
       });
 
+      console.log('Response status:', response.status);
+      console.log('Response headers:', response.headers);
+
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        const errorText = await response.text();
+        console.error('Error response:', errorText);
+        throw new Error(`HTTP error! status: ${response.status} - ${errorText}`);
       }
 
       const data = await response.json();
+      console.log('Response data:', data);
+      
       // appRoute returns the flow output directly
       if (data && data.plan) {
         setSuggestions(prev => ({
@@ -103,7 +111,7 @@ export default function MealSuggestions({
         throw new Error(`Received no suggestions from the AI for ${day}.`);
       }
     } catch (e: any) {
-      console.error(e);
+      console.error('Error in getSuggestionsForDay:', e);
       const errorMessage = "Sorry, I couldn't generate suggestions at the moment. Please try again.";
       setError(errorMessage);
       toast({
