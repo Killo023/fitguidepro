@@ -1,10 +1,8 @@
-'use server';
-
 /**
  * @fileOverview AI agent that suggests meal replacements and alternatives
  *   based on macronutrient goals and diet preferences for a single day.
  *
- * - suggestDailyMealPlan - A function that suggests a meal plan for one day.
+ * - suggestDailyMealPlanFlow - A flow that suggests a meal plan for one day.
  * - SuggestDailyMealPlanInput - The input type for the suggestDailyMealPlan function.
  * - SuggestDailyMealPlanOutput - The return type for the suggestDailyMealPlan function.
  */
@@ -67,11 +65,6 @@ export type SuggestDailyMealPlanOutput = z.infer<
   typeof SuggestDailyMealPlanOutputSchema
 >;
 
-export async function suggestDailyMealPlan(
-  input: SuggestDailyMealPlanInput
-): Promise<SuggestDailyMealPlanOutput> {
-  return suggestDailyMealPlanFlow(input);
-}
 
 const prompt = ai.definePrompt({
   name: 'suggestDailyMealPlanPrompt',
