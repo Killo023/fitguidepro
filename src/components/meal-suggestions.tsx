@@ -69,6 +69,9 @@ export default function MealSuggestions({
     setLoadingDay(day);
     setError(null);
     try {
+      // Handle goalType - if it's an array, take the first element
+      const goalTypeValue = Array.isArray(goalType) ? goalType[0] : goalType;
+      
       console.log('Making request to /api/genkit for day:', day);
       const response = await fetch('/api/genkit', {
         method: 'POST',
@@ -76,16 +79,14 @@ export default function MealSuggestions({
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          input: {
-            dailyCalories,
-            macros,
-            dietPreference,
-            goalType,
-            allergies,
-            dislikedFoods,
-            isLactoseIntolerant,
-            dayOfWeek: day,
-          }
+          dailyCalories,
+          macros,
+          dietPreference,
+          goalType: goalTypeValue,
+          allergies,
+          dislikedFoods,
+          isLactoseIntolerant,
+          dayOfWeek: day,
         }),
       });
 
